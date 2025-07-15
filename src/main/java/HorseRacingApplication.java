@@ -1,7 +1,9 @@
 import entity.HorseRacing;
+import entity.HorseStatistics;
 import service.HorseRacingService;
 
 import java.util.List;
+import java.util.Map;
 
 /*
 Есть файл с записями о результатах лошадиных скачек
@@ -28,5 +30,10 @@ public class HorseRacingApplication {
 
         System.out.printf("Most successful horse: %s\n\n", HorseRacingService.findMostSuccessfulHorse(horseRacings));
         System.out.printf("Most frequent horse: %s\n\n", HorseRacingService.findMostFrequentHorse(horseRacings));
+        System.out.println("Horses statistics:");
+        Map<String, HorseStatistics> horseStatistics = HorseRacingService.calculateHorseStatistics(horseRacings);
+        for (Map.Entry<String, HorseStatistics> entry : horseStatistics.entrySet()) {
+            System.out.printf("%s: %s\n", entry.getKey(), entry.getValue());
+        }
     }
 }

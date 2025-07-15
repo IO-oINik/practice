@@ -93,6 +93,47 @@ public class HorseRacingService {
         return result;
     }
 
+    public static Map<String, HorseStatistics> calculateHorseStatistics(List<HorseRacing> horseRacings) {
+        Map<String, HorseStatistics> horseStats = horseRacings.stream()
+                .flatMap(race -> Stream.of(
+                        Map.entry(race.getFirstPlaceNameHorse(), 1),
+                        Map.entry(race.getSecondPlaceNameHorse(), 2),
+                        Map.entry(race.getThirdPlaceNameHorse(), 3)
+                ))
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        entry -> {
+                            HorseStatistics stats = new HorseStatistics();
+                            switch (entry.getValue()) {
+                                case 1:
+                                    stats.addFirstPlace();
+                                    break;
+                                case 2:
+                                    stats.addSecondPlace();
+                                    break;
+                                case 3:
+                                    stats.addThirdPlace();
+                                    break;
+                            }
+                            return stats;
+                        },
+                        (existing, replacement) -> {
+                            if (replacement.getFirstPlaces() > 0) {
+                                existing.addFirstPlace();
+                            }
+                            if (replacement.getSecondPlaces() > 0) {
+                                existing.addSecondPlace();
+                            }
+                            if (replacement.getThirdPlaces() > 0) {
+                                existing.addThirdPlace();
+                            }
+                            return existing;
+                        }
+                ));
+
+        return horseStats;
+    }
+
     private static String findHorseNameMaxCount(Map<String, Integer> horseMap) {
         return horseMap.entrySet().stream()
                 .max(Map.Entry.comparingByValue())
