@@ -1,6 +1,7 @@
 import entity.HorseRacing;
 import entity.HorseStatistics;
 import service.HorseRacingService;
+import util.HorseRacingFactory;
 
 import java.util.List;
 import java.util.Map;
@@ -20,7 +21,7 @@ public class HorseRacingApplication {
 
     public static void main(String[] args) {
         try {
-            HorseRacingService.generateToFile(PATH, 30);
+            HorseRacingFactory.generateToFile(PATH, 30);
         } catch (RuntimeException e) {
             System.out.println("Failed to generate to file");
             return;
