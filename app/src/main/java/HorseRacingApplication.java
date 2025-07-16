@@ -18,21 +18,29 @@ import java.util.Map;
 
 public class HorseRacingApplication {
     private static final String PATH = "horseRacing.txt";
+    private final HorseRacingFactory horseRacingFactory;
+    private final HorseRacingService horseRacingService;
 
-    public static void main(String[] args) {
+
+    public HorseRacingApplication(HorseRacingFactory horseRacingFactory, HorseRacingService horseRacingService) {
+        this.horseRacingFactory = horseRacingFactory;
+        this.horseRacingService = horseRacingService;
+    }
+
+    public void start() {
         try {
-            HorseRacingFactory.generateToFile(PATH, 30);
+            horseRacingFactory.generateToFile(PATH, 30);
         } catch (RuntimeException e) {
             System.out.println("Failed to generate to file");
             return;
         }
 
-        List<HorseRacing> horseRacings = HorseRacingService.loadFromFile(PATH);
+        List<HorseRacing> horseRacings = horseRacingService.loadFromFile(PATH);
 
-        System.out.printf("Most successful horse: %s\n\n", HorseRacingService.findMostSuccessfulHorse(horseRacings));
-        System.out.printf("Most frequent horse: %s\n\n", HorseRacingService.findMostFrequentHorse(horseRacings));
+        System.out.printf("Most successful horse: %s\n", horseRacingService.findMostSuccessfulHorse(horseRacings));
+        System.out.printf("Most frequent horse: %s\n\n", horseRacingService.findMostFrequentHorse(horseRacings));
         System.out.println("Horses statistics:");
-        Map<String, HorseStatistics> horseStatistics = HorseRacingService.calculateHorseStatistics(horseRacings);
+        Map<String, HorseStatistics> horseStatistics = horseRacingService.calculateHorseStatistics(horseRacings);
         for (Map.Entry<String, HorseStatistics> entry : horseStatistics.entrySet()) {
             System.out.printf("%s: %s\n", entry.getKey(), entry.getValue());
         }

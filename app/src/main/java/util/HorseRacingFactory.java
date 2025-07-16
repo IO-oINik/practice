@@ -30,7 +30,7 @@ public class HorseRacingFactory {
             "Rainbow"
     };
 
-    public static HorseRacing generate() {
+    public HorseRacing generate() {
         Random random = new Random();
         LocalDate raceDate = LocalDate.now().minusDays(random.nextInt(DAYS));
         List<String> horseNames = Arrays.asList(HORSE_NAME);
@@ -45,11 +45,11 @@ public class HorseRacingFactory {
         return new HorseRacing(raceDate, firstPlaceHorseName, secondPlaceHorseName, thirdPlaceHorseName);
     }
 
-    public static void generateToFile(String path, int n) {
+    public void generateToFile(String path, int n) {
         logger.info("Generating {} horse races to file: {}", n, path);
         try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(path))) {
             for (int i = 0; i < n; i++) {
-                HorseRacing horseRacing = HorseRacingFactory.generate();
+                HorseRacing horseRacing = generate();
                 writer.write(String.format("%s;%s;%s;%s\n",
                         horseRacing.getDate(),
                         horseRacing.getFirstPlaceNameHorse(),

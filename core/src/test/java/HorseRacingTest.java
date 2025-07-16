@@ -25,7 +25,8 @@ public class HorseRacingTest {
                 "2024-01-25;Thunder;Breeze;Dawn"
         ));
 
-        List<HorseRacing> races = HorseRacingService.loadFromFile(TEST_FILE_PATH);
+        HorseRacingService horseRacingService = new HorseRacingService();
+        List<HorseRacing> races = horseRacingService.loadFromFile(TEST_FILE_PATH);
 
         assertEquals(4, races.size());
         assertEquals("Blizzard", races.get(0).getFirstPlaceNameHorse());
@@ -43,8 +44,9 @@ public class HorseRacingTest {
                 new HorseRacing(LocalDate.of(2024, 1, 20), "Breeze", "Blizzard", "Rainbow"),
                 new HorseRacing(LocalDate.of(2024, 1, 25), "Thunder", "Breeze", "Blizzard")
         );
+        HorseRacingService horseRacingService = new HorseRacingService();
 
-        String mostFrequentHorse = HorseRacingService.findMostFrequentHorse(races);
+        String mostFrequentHorse = horseRacingService.findMostFrequentHorse(races);
 
         assertEquals("Blizzard", mostFrequentHorse);
     }
@@ -58,7 +60,8 @@ public class HorseRacingTest {
                 new HorseRacing(LocalDate.of(2024, 1, 25), "Thunder", "Breeze", "Dawn")
         );
 
-        String mostSuccessfulHorse = HorseRacingService.findMostSuccessfulHorse(races);
+        HorseRacingService horseRacingService = new HorseRacingService();
+        String mostSuccessfulHorse = horseRacingService.findMostSuccessfulHorse(races);
 
         assertEquals("Blizzard", mostSuccessfulHorse);
     }
@@ -72,7 +75,8 @@ public class HorseRacingTest {
                 new HorseRacing(LocalDate.of(2024, 1, 25), "Thunder", "Breeze", "Dawn")
         );
 
-        Map<String, HorseStatistics> stats = HorseRacingService.calculateHorseStatistics(races);
+        HorseRacingService horseRacingService = new HorseRacingService();
+        Map<String, HorseStatistics> stats = horseRacingService.calculateHorseStatistics(races);
 
         HorseStatistics blizzardStats = stats.get("Blizzard");
         assertNotNull(blizzardStats);
@@ -92,21 +96,24 @@ public class HorseRacingTest {
     @Test
     void testFindMostFrequentHorseWithEmptyList() {
         List<HorseRacing> emptyRaces = Collections.emptyList();
-        String mostFrequentHorse = HorseRacingService.findMostFrequentHorse(emptyRaces);
+        HorseRacingService horseRacingService = new HorseRacingService();
+        String mostFrequentHorse = horseRacingService.findMostFrequentHorse(emptyRaces);
         assertNull(mostFrequentHorse);
     }
 
     @Test
     void testFindMostSuccessfulHorseWithEmptyList() {
         List<HorseRacing> emptyRaces = Collections.emptyList();
-        String mostSuccessfulHorse = HorseRacingService.findMostSuccessfulHorse(emptyRaces);
+        HorseRacingService horseRacingService = new HorseRacingService();
+        String mostSuccessfulHorse = horseRacingService.findMostSuccessfulHorse(emptyRaces);
         assertNull(mostSuccessfulHorse);
     }
 
     @Test
     void testCalculateHorseStatisticsWithEmptyList() {
         List<HorseRacing> emptyRaces = Collections.emptyList();
-        Map<String, HorseStatistics> horseStatistics = HorseRacingService.calculateHorseStatistics(emptyRaces);
+        HorseRacingService horseRacingService = new HorseRacingService();
+        Map<String, HorseStatistics> horseStatistics = horseRacingService.calculateHorseStatistics(emptyRaces);
         assertNotNull(horseStatistics);
         assertTrue(horseStatistics.isEmpty());
     }

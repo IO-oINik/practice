@@ -13,7 +13,8 @@ public class AppTest {
 
     @Test
     void testGenerateToFile() throws Exception {
-        HorseRacingFactory.generateToFile(TEST_FILE_PATH, 5);
+        HorseRacingFactory horseRacingFactory = new HorseRacingFactory();
+        horseRacingFactory.generateToFile(TEST_FILE_PATH, 5);
 
         File file = new File(TEST_FILE_PATH);
         assertTrue(file.exists());

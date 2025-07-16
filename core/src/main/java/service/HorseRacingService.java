@@ -23,7 +23,7 @@ public class HorseRacingService {
     private static final int INDEX_SECOND_PLACE = 2;
     private static final int INDEX_THIRD_PLACE = 3;
 
-    public static List<HorseRacing> loadFromFile(String path) {
+    public List<HorseRacing> loadFromFile(String path) {
         logger.info("Loading races from file: {}", path);
         try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
             List<HorseRacing> races = reader.lines()
@@ -45,7 +45,7 @@ public class HorseRacingService {
         }
     }
 
-    public static String findMostFrequentHorse(List<HorseRacing> races) {
+    public String findMostFrequentHorse(List<HorseRacing> races) {
         logger.info("Finding most frequently participating horse out of {} races", races.size());
         Map<String, Integer> horseParticipationCount = races.stream()
                 .flatMap(race -> Stream.of(
@@ -63,7 +63,7 @@ public class HorseRacingService {
         return result;
     }
 
-    public static String findMostSuccessfulHorse(List<HorseRacing> races) {
+    public String findMostSuccessfulHorse(List<HorseRacing> races) {
         logger.info("Finding most successful horse from {} races", races.size());
         Map<String, Integer> horseSuccessCount = races.stream()
                 .flatMap(race -> Stream.of(
@@ -82,7 +82,7 @@ public class HorseRacingService {
         return result;
     }
 
-    public static Map<String, HorseStatistics> calculateHorseStatistics(List<HorseRacing> horseRacings) {
+    public Map<String, HorseStatistics> calculateHorseStatistics(List<HorseRacing> horseRacings) {
         logger.info("Calculating statistics for {} races", horseRacings.size());
         Map<String, HorseStatistics> horseStats = horseRacings.stream()
                 .flatMap(race -> Stream.of(
@@ -118,7 +118,7 @@ public class HorseRacingService {
         return horseStats;
     }
 
-    private static String findHorseNameMaxCount(Map<String, Integer> horseMap) {
+    private String findHorseNameMaxCount(Map<String, Integer> horseMap) {
         return horseMap.entrySet().stream()
                 .max(Map.Entry.comparingByValue())
                 .map(Map.Entry::getKey)
